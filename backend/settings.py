@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -88,11 +89,21 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': BASE_DIR / 'db.sqlite3',
+    # }
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'expense_tracker',
+        'USER' : 'rishith',
+        'PASSWORD' : 'rishith',
+        'HOST' : 'localhost',
+        'PORT' : '5432',
     }
 }
+
+DATABASES['default'] = dj_database_url.parse("postgres://expense_tracker_db_hnsj_user:UzgIxzEeTqyTEdjoQ5qYW7VPWzb9AtyY@dpg-cofp2sn79t8c73c8285g-a.oregon-postgres.render.com/expense_tracker_db_hnsj")
 
 AUTH_USER_MODEL = 'app.CustomUser'
 
