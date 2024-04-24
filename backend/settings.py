@@ -67,7 +67,13 @@ ROOT_URLCONF = 'backend.urls'
 CORS_ALLOW_ALL_ORIGINS = True
 
 CORS_ALLOWED_ORIGINS = [
+    'http://localhost:3000',
+    'http://localhost:8000',
+    'http://127.0.0.1:3000',
+    'http://0.0.0.0:8000',
+    'http://localhost:5173',
     'http://127.0.0.1:5173',
+
 ]
 
 CORS_ALLOW_CREDENTIALS = True
@@ -95,21 +101,47 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': BASE_DIR / 'db.sqlite3',
-    # }
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'expense_tracker',
-        'USER' : 'rishith',
-        'PASSWORD' : 'rishith',
-        'HOST' : 'localhost',
-        'PORT' : '5432',
-    }
-}
+# DATABASES = {
+#     # 'default': {
+#     #     'ENGINE': 'django.db.backends.sqlite3',
+#     #     'NAME': BASE_DIR / 'db.sqlite3',
+#     # }
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'expense_tracker',
+#         'USER' : 'rishith',
+#         'PASSWORD' : 'rishith',
+#         'HOST' : 'db',
+#         'PORT' : '5432',
+#     }
+# }
 
+DOCKER_ENV = os.getenv('DOCKER_ENV', 'false').lower() == 'true'
+
+if DOCKER_ENV:
+    # Use Docker database host
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'expense_tracker',
+            'USER': 'rishith',
+            'PASSWORD': 'rishith',
+            'HOST': 'db',  # Docker database host
+            'PORT': '5432',
+        }
+    }
+else:
+    # Use localhost database configuration
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'expense_tracker',
+            'USER': 'rishith',
+            'PASSWORD': 'rishith',
+            'HOST': 'localhost',  # Local database host
+            'PORT': '5432',
+        }
+    }
 database_url = os.environ.get("DATABASE_URL")
 DATABASES['default'] = dj_database_url.parse(database_url)
 

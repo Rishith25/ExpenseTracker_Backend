@@ -1,0 +1,26 @@
+version: "3.4"
+
+services:
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: expense_tracker
+      POSTGRES_USER: rishith
+      POSTGRES_PASSWORD: rishith
+    hostname: db
+      
+  web:
+    build: .
+    command: sh -c "python manage.py migrate && python3 manage.py runserver 0.0.0.0:8000"
+    # command: gunicorn --bind 0.0.0.0:8000 project.wsgi:application
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      - DOCKER_ENV=true 
+
+volumes:
+  expense_tracker-dev-data:
