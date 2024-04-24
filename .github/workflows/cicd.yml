@@ -11,8 +11,8 @@ env:
   PG_PASSWORD: ${{secrets.PG_PASSWORD}}
   SLACK_WEBHOOK_URL: ${{secrets.SLACK_WEBHOOK_URL}}
   ALLOWED_HOSTS: localhost,127.0.0.1
-  # DATABASE_URL:
-  DATABASE_URL: postgres://expense_tracker_db_hnsj_user:UzgIxzEeTqyTEdjoQ5qYW7VPWzb9AtyY@dpg-cofp2sn79t8c73c8285g-a.oregon-postgres.render.com/expense_tracker_db_hnsj
+  DATABASE_URL: ${{secrets.DATABASE_URL}}
+  # DATABASE_URL: postgres://expense_tracker_db_hnsj_user:UzgIxzEeTqyTEdjoQ5qYW7VPWzb9AtyY@dpg-cofp2sn79t8c73c8285g-a.oregon-postgres.render.com/expense_tracker_db_hnsj
   DEBUG: True
   SECRET_KEY: ${{secrets.SECRET_KEY}}
 

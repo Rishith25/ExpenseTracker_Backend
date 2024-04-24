@@ -124,14 +124,6 @@ database_url = os.environ.get("DATABASE_URL")
 
 DATABASES = {
     'default': dj_database_url.parse(database_url),
-    # 'test': {
-    #     'ENGINE': 'django.db.backends.postgresql',
-    #     'NAME': 'expense_tracker',
-    #     'USER': 'rishith',
-    #     'PASSWORD': 'rishith',
-    #     'HOST': 'localhost',  # Local database host
-    #     'PORT': '5432',
-    # }
 }
 
 
