@@ -151,7 +151,7 @@ DATABASES = {
     'default': dj_database_url.parse(database_url),
     'test': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'test_expense_tracker',
+        'NAME': 'expense_tracker',
         'USER': 'rishith',
         'PASSWORD': 'rishith',
         'HOST': 'localhost',  # Local database host
