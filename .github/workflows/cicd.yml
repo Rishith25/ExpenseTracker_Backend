@@ -17,7 +17,7 @@ jobs:
 
     services:
       postgres:
-        image: postgres:11.7
+        image: postgres:latest
         env:
           POSTGRES_USER: ${{ secrets.PG_USER }}
           POSTGRES_PASSWORD: ${{ secrets.PG_PASSWORD }}
@@ -37,7 +37,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: 3.9
+          python-version: 3.11
 
       - name: Install dependencies
         run: |
