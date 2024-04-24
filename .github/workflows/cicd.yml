@@ -53,7 +53,8 @@ jobs:
 
       - name: Drop existing test database
         run: |
-          python manage.py test --noinput --parallel=1 --keepdb --verbosity 0
+          python manage.py test --noinput --parallel=1 --keepdb --verbosity 0 && \
+          python manage.py test --noinput --parallel=1 --keepdb --verbosity 0 -- --keepdb
 
       - name: Run migrations
         run: python manage.py migrate
