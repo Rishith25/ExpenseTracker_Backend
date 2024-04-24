@@ -6,14 +6,13 @@ on:
       - main
 
 env:
-  PG_DATABASE: expense_tracker
+  PG_DATABASE: ${{secrets.PG_DATABASE}}
   PG_USER: ${{ secrets.PG_USER }}
   PG_PASSWORD: ${{secrets.PG_PASSWORD}}
   SLACK_WEBHOOK_URL: ${{secrets.SLACK_WEBHOOK_URL}}
-  ALLOWED_HOSTS: localhost,127.0.0.1
+  ALLOWED_HOSTS: ${{secrets.ALLOWED_HOSTS}}
   DATABASE_URL: ${{secrets.DATABASE_URL}}
-  # DATABASE_URL: postgres://expense_tracker_db_hnsj_user:UzgIxzEeTqyTEdjoQ5qYW7VPWzb9AtyY@dpg-cofp2sn79t8c73c8285g-a.oregon-postgres.render.com/expense_tracker_db_hnsj
-  DEBUG: True
+  DEBUG: ${{secrets.DEBUG}}
   SECRET_KEY: ${{secrets.SECRET_KEY}}
 
 jobs:
@@ -26,7 +25,7 @@ jobs:
         env:
           POSTGRES_USER: ${{ secrets.PG_USER }}
           POSTGRES_PASSWORD: ${{ secrets.PG_PASSWORD }}
-          POSTGRES_DB: expense_tracker
+          POSTGRES_DB: ${{secrets.PG_DATABASE}}
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
