@@ -11,6 +11,9 @@ env:
   PG_PASSWORD: ${{secrets.PG_PASSWORD}}
   SLACK_WEBHOOK_URL: ${{secrets.SLACK_WEBHOOK_URL}}
   ALLOWED_HOSTS: localhost,127.0.0.1
+  DATABASE_URL: ${{secrets.DATABASE_URL}}
+  DEBUG: True
+  SECRET_KEY: ${{secrets.SECRET_KEY}}
 
 jobs:
   run-tests:
