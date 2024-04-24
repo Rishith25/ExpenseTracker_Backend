@@ -75,3 +75,15 @@ jobs:
         if: failure()
         run: |
           curl -X POST -H 'Content-type: application/json' --data '{"text":"⚠Error: The pipeline has failed❗"}' ${{secrets.SLACK_WEBHOOK_URL}}
+
+  deploy-to-production:
+    runs-on: ubuntu-latest
+    needs: run-tests
+
+    steps:
+      # Deploy to Production using Render
+      - name: Deploy to Production
+        uses: johnbeynon/render-deploy-action@v0.0.8
+        with:
+          service-id: ${{secrets.SERVICE_ID}}
+          api-key: ${{secrets.RENDER_API_KEY}}
