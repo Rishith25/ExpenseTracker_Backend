@@ -29,13 +29,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get("SECRET_KEY")
+SECRET_KEY = os.getenv("SECRET_KEY")
 # SECRET_KEY = "django-insecure--s=1hs3u6s1p*p7#$vw3$q9i8jyh#r+pd7r2l)ucxw-l(t$*87"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get("DEBUG", "False").lower() == 'true'
+DEBUG = os.getenv("DEBUG", "False").lower() == 'true'
 
-ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(",")
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS").split(",")
 
 
 # Application definition
@@ -120,6 +120,20 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 DOCKER_ENV = os.getenv('DOCKER_ENV', 'false').lower() == 'true'
 
+database_url = os.environ.get("DATABASE_URL")
+
+DATABASES = {
+    'default': dj_database_url.parse(database_url),
+    # 'test': {
+    #     'ENGINE': 'django.db.backends.postgresql',
+    #     'NAME': 'expense_tracker',
+    #     'USER': 'rishith',
+    #     'PASSWORD': 'rishith',
+    #     'HOST': 'localhost',  # Local database host
+    #     'PORT': '5432',
+    # }
+}
+
 # if DOCKER_ENV:
 #     # Use Docker database host
 #     DATABASES = {
@@ -145,19 +159,6 @@ DOCKER_ENV = os.getenv('DOCKER_ENV', 'false').lower() == 'true'
 #         }
 # }
 
-database_url = os.environ.get("DATABASE_URL")
-
-DATABASES = {
-    'default': dj_database_url.parse(database_url),
-    'test': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'expense_tracker',
-        'USER': 'rishith',
-        'PASSWORD': 'rishith',
-        'HOST': 'localhost',  # Local database host
-        'PORT': '5432',
-    }
-}
 
 
 
