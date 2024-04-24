@@ -134,6 +134,9 @@ DATABASES = {
     # }
 }
 
+print("DATABASES:", DATABASES)
+
+
 # if DOCKER_ENV:
 #     # Use Docker database host
 #     DATABASES = {
