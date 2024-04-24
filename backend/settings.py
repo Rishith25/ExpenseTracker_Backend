@@ -119,32 +119,33 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 DOCKER_ENV = os.getenv('DOCKER_ENV', 'false').lower() == 'true'
 
-if DOCKER_ENV:
-    # Use Docker database host
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': 'expense_tracker',
-            'USER': 'rishith',
-            'PASSWORD': 'rishith',
-            'HOST': 'db',  # Docker database host
-            'PORT': '5432',
-        }
-    }
-else:
-    # Use localhost database configuration
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': 'expense_tracker',
-            'USER': 'rishith',
-            'PASSWORD': 'rishith',
-            'HOST': 'localhost',  # Local database host
-            'PORT': '5432',
-        }
-    }
+# if DOCKER_ENV:
+#     # Use Docker database host
+#     DATABASES = {
+#         'default': {
+#             'ENGINE': 'django.db.backends.postgresql',
+#             'NAME': 'expense_tracker',
+#             'USER': 'rishith',
+#             'PASSWORD': 'rishith',
+#             'HOST': 'db',  # Docker database host
+#             'PORT': '5432',
+#         }
+#     }
+# else:
+#     # Use localhost database configuration
+#     DATABASES = {
+#         'default': {
+#             'ENGINE': 'django.db.backends.postgresql',
+#             'NAME': 'expense_tracker',
+#             'USER': 'rishith',
+#             'PASSWORD': 'rishith',
+#             'HOST': 'localhost',  # Local database host
+#             'PORT': '5432',
+#         }
+# }
+
 database_url = os.environ.get("DATABASE_URL")
-DATABASES['default'] = dj_database_url.parse(database_url)
+DATABASES['default'] = dj_database_url.parse(database_url) # type: ignore
 
 AUTH_USER_MODEL = 'app.CustomUser'
 
