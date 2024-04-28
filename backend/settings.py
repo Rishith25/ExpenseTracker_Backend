@@ -122,38 +122,6 @@ DATABASES = {
     'default': dj_database_url.parse(database_url),
 }
 
-
-
-# if DOCKER_ENV:
-#     # Use Docker database host
-#     DATABASES = {
-#         'default': {
-#             'ENGINE': 'django.db.backends.postgresql',
-#             'NAME': 'expense_tracker',
-#             'USER': 'rishith',
-#             'PASSWORD': 'rishith',
-#             'HOST': 'db',  # Docker database host
-#             'PORT': '5432',
-#         }
-#     }
-# else:
-#     # Use localhost database configuration
-#     DATABASES = {
-#         'default': {
-#             'ENGINE': 'django.db.backends.postgresql',
-#             'NAME': 'expense_tracker',
-#             'USER': 'rishith',
-#             'PASSWORD': 'rishith',
-#             'HOST': 'localhost',  # Local database host
-#             'PORT': '5432',
-#         }
-# }
-
-
-
-
-# DATABASES['default'] = dj_database_url.parse(database_url)
-
 AUTH_USER_MODEL = 'app.CustomUser'
 
 REST_FRAMEWORK = {

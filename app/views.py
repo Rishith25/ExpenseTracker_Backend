@@ -68,9 +68,11 @@ class AccountView(generics.CreateAPIView):
     
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save(user_id=request.user.id)  # Set the user_id field to the authenticated user
-        return Response({'message': 'Account created successfully'}, status=status.HTTP_201_CREATED)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save(user_id=request.user.id)  # Set the user_id field to the authenticated user
+            return Response({'message': 'Account created successfully'}, status=status.HTTP_201_CREATED)
+        return Response({'error': 'Account with this account no already exists'}, status=status.HTTP_401_UNAUTHORIZED)
+        
     
     def get(self, request):
         user_id = self.request.user.id
@@ -78,8 +80,25 @@ class AccountView(generics.CreateAPIView):
         serializer = AccountSerializer(account, many=True)
         print(serializer.data)
         return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    def get_object(self):
+        # Get the account object for the authenticated user
+        return get_object_or_404(Account, user=self.request.user.id)
 
-
+    def put(self, request, pk):
+        # Update account details
+        account = get_object_or_404(Account, account_no=pk)
+        serializer = self.get_serializer(account, data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    def delete(self, request, pk):
+        # Delete account
+        account = get_object_or_404(Account, account_no=pk)
+        account.delete()
+        return Response({'message': 'Account deleted successfully'}, status=status.HTTP_204_NO_CONTENT)
+    
 class TransactionView(generics.CreateAPIView):
     # queryset = FinancialTransaction.objects.all()
     serializer_class = FinancialTransactionSerializer
@@ -91,12 +110,6 @@ class TransactionView(generics.CreateAPIView):
         user_id = request.user.id
         serializer.save(user_id=user_id)  # Set the user_id field to the authenticated user
         account = Account.objects.filter(user = user_id, account_no = int(request.data['account_no'])).first()
-        # if account_serializer.is_valid(raise_exception=True):
-        #     balance = float(account_serializer.data['balance']) - float(request.data['amount'])
-        #     account_serializer.validated_data['balance'] = balance
-        #     account_serializer.data['balance'] = str(balance)
-        #     account_serializer.save()
-        #     print(balance)
         if(request.data['transaction_type'] == 'expense'):
             balance = float(account.balance) - float(request.data['amount'])
             account.balance = balance
@@ -116,6 +129,19 @@ class TransactionView(generics.CreateAPIView):
         serializer = FinancialTransactionSerializer(account, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
     
+    def put(self, request, pk):
+        # Update account details
+        transaction = get_object_or_404(FinancialTransaction, id=pk)
+        serializer = self.get_serializer(transaction, data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    def delete(self, request, pk):
+        # Delete account
+        transaction = get_object_or_404(FinancialTransaction, id=pk)
+        transaction.delete()
+        return Response({'message': 'Account deleted successfully'}, status=status.HTTP_204_NO_CONTENT)
 
 class AnalyticsDataView(generics.CreateAPIView):
     serializer_class = FinancialTransactionSerializer
