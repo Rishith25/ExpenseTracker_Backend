@@ -109,7 +109,7 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 #         'NAME': 'expense_tracker',
 #         'USER' : 'rishith',
 #         'PASSWORD' : 'rishith',
-#         'HOST' : 'db',
+#         'HOST' : 'localhost',
 #         'PORT' : '5432',
 #     }
 # }

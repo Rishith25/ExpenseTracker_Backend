@@ -142,8 +142,8 @@ class TransactionView(generics.CreateAPIView):
         transaction = get_object_or_404(FinancialTransaction, id=pk)
         amount = transaction.amount
         transaction_type = transaction.transaction_type
-
-        account = Account.objects.get(id=transaction.account_no)
+        # print(transaction.account_no.account_no)
+        account = Account.objects.get(account_no=int(transaction.account_no.account_no))
         
         if transaction_type == 'expense':
             account.balance += amount 
