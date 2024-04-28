@@ -143,12 +143,7 @@ class TransactionView(generics.CreateAPIView):
         amount = transaction.amount
         transaction_type = transaction.transaction_type
 
-        # Get the associated account
-        account = None
-        try:
-            account = Account.objects.get(id=transaction.account_id)
-        except: # type: ignore
-            return Response({'error': 'Associated account not found'}, status=status.HTTP_404_NOT_FOUND)
+        account = Account.objects.get(id=transaction.account_no)
         
         if transaction_type == 'expense':
             account.balance += amount 
