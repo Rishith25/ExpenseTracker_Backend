@@ -147,7 +147,7 @@ class TransactionView(generics.CreateAPIView):
         account = None
         try:
             account = Account.objects.get(id=transaction.account_id)
-        except ObjectDoesNotExist: # type: ignore
+        except: # type: ignore
             return Response({'error': 'Associated account not found'}, status=status.HTTP_404_NOT_FOUND)
         
         if transaction_type == 'expense':
