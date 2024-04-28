@@ -140,6 +140,23 @@ class TransactionView(generics.CreateAPIView):
     def delete(self, request, pk):
         # Delete account
         transaction = get_object_or_404(FinancialTransaction, id=pk)
+        amount = transaction.amount
+        transaction_type = transaction.transaction_type
+
+        # Get the associated account
+        account = None
+        try:
+            account = Account.objects.get(id=transaction.account_id)
+        except ObjectDoesNotExist: # type: ignore
+            return Response({'error': 'Associated account not found'}, status=status.HTTP_404_NOT_FOUND)
+        
+        if transaction_type == 'expense':
+            account.balance += amount 
+        else:
+            account.balance -= amount
+        
+        # Save the updated balance
+        account.save()
         transaction.delete()
         return Response({'message': 'Account deleted successfully'}, status=status.HTTP_204_NO_CONTENT)
 
