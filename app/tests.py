@@ -101,6 +101,5 @@ class AnalyticsDataViewTestCase(APITestCase):
         url = reverse('analytics')
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        # Add assertions to validate the response data
 
     # Add more test cases for analytics view as needed
