@@ -116,10 +116,9 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 DOCKER_ENV = os.getenv('DOCKER_ENV', 'false').lower() == 'true'
 database_url = os.environ.get("DATABASE_URL")
-print(database_url)
 
 DATABASES = {
-    'default': dj_database_url.parse("postgres://expense_tracker_user:ENpAJOJMOH7lf0TTC0NTFxEIFaLerjdg@dpg-consir0cmk4c73acmn7g-a.oregon-postgres.render.com/expense_tracker_db_476n"),
+    'default': dj_database_url.parse(database_url),
 }
 
 AUTH_USER_MODEL = 'app.CustomUser'
